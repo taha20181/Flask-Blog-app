@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %} - Flask</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">BLOG</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          {% if g.user %}
+          <a class="nav-item nav-link" href="#">{{ g['username'] }}</a>
+          <a class="nav-item nav-link" href="/auth/logout">Logout</a>
+          {% else %}
+          <a class="nav-item nav-link" href="/auth/register">Register</a>
+          <a class="nav-item nav-link" href="/auth/login">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    <section class="content">
+        <header>
+            {% block header %} {% endblock %}
+        </header>
+        {% for message in get_flashed_messages() %}
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="flash">{{ message }}</div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+        {% block content %} {% endblock %}
+    </section>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.js') }}"></script>
+  </body>
+</html>

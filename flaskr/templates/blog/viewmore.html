@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <!-- <div class="index-header">
+        <h2 class="text-center">{% block title %} Blogs {% endblock %}</h2>
+    </div> -->
+{% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="row">
+        <div class="col-md-6 p-5" style="margin: 4rem 5rem; padding: 4rem;">
+            <div class="full-view__post--title">
+                <h3 style="font-size: 300%;">{{ post['title'] }}</h3>
+            </div>
+            <div class="full-view__post--author">
+                <p>By - <strong>{{ post['username'] }}</strong></p>
+            </div>
+            <div class="full-view__post--created">
+                <p class="post__card--created">{{ post['created'].strftime('%Y/%m/%d') }}</p>
+            </div>
+            <div class="full-view__post--body">
+                <p class="full-view-body--para">{{ post['body'] }}</p>
+            </div>
+        </div>
+        
+        
+        <div class="col-md-4">
+            <h3 class="text-center">Most Recent</h3>
+            {% for post in posts %}
+            <div class="post__card card" style="margin: 4rem;">
+                <h4 class="post__card--title"><strong>{{ post['title'] }}</strong></h4>
+                <div class="post__card--body">{{ post['body'][0:150] }}</div>
+                <div class="post__card--created">{{ post['created'].strftime('%Y/%m/%d') }}</div>
+                <div class="post__card--author">By - <strong>{{ post['username'] }}</strong></div>
+                {% if g.user['id'] == post['author_id'] %}
+                <div class="row justify-content-around mt-2">
+                    <button class="btn btn-outline-warning m-2">
+                        <a href="{{ url_for('blog.update', id=post['id']) }}">Update</a>
+                    </button>
+    
+                    <button class="btn btn-outline-primary m-2">
+                        <a href="{{ url_for('blog.viewmore', id=post['id']) }}">Read More</a>
+                    </button>
+                </div>
+                {% endif %}
+                <!-- {% if not loop.last %}
+                <hr>
+                {% endif %} -->
+            </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+</section>
+    
+{% endblock %}
